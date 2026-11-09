@@ -2,13 +2,14 @@ import { useState } from 'react';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { fetchNotes } from '../../services/noteService';
 import NoteList from '../NoteList/NoteList';
+import Pagination from '../Pagination/Pagination';
 import css from './App.module.css';
 
 const PER_PAGE = 12;
 
 export default function App() {
-  // Сеттери з'являться на кроках 5 (пагінація) і 6 (пошук)
-  const [page] = useState(1);
+  const [page, setPage] = useState(1);
+  // Сеттер з'явиться на кроці 6 (пошук)
   const [search] = useState('');
 
   const { data, isLoading, isError } = useQuery({
@@ -21,7 +22,13 @@ export default function App() {
     <div className={css.app}>
       <header className={css.toolbar}>
         {/* Компонент SearchBox */}
-        {/* Пагінація */}
+        {data && data.totalPages > 1 && (
+          <Pagination
+            totalPages={data.totalPages}
+            currentPage={page}
+            onPageChange={setPage}
+          />
+        )}
         {/* Кнопка створення нотатки */}
       </header>
 
