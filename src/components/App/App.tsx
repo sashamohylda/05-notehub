@@ -4,6 +4,7 @@ import { useDebouncedCallback } from 'use-debounce';
 import { fetchNotes } from '../../services/noteService';
 import NoteList from '../NoteList/NoteList';
 import Modal from '../Modal/Modal';
+import NoteForm from '../NoteForm/NoteForm';
 import Pagination from '../Pagination/Pagination';
 import SearchBox from '../SearchBox/SearchBox';
 import css from './App.module.css';
@@ -59,8 +60,7 @@ export default function App() {
 
       {isModalOpen && (
         <Modal onClose={closeModal}>
-          {/* Тимчасово, до NoteForm на кроці 8 */}
-          <p>NoteForm will be here</p>
+          <NoteForm onClose={closeModal} />
         </Modal>
       )}
     </div>
