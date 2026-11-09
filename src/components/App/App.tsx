@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { fetchNotes } from '../../services/noteService';
+import NoteList from '../NoteList/NoteList';
 import css from './App.module.css';
 
 const PER_PAGE = 12;
@@ -26,12 +27,7 @@ export default function App() {
 
       {isLoading && <p>Loading notes...</p>}
       {isError && <p>Something went wrong. Try again later.</p>}
-      {/* Тимчасово, до NoteList на кроці 4 */}
-      {data && (
-        <p>
-          Notes on page: {data.notes.length}, total pages: {data.totalPages}
-        </p>
-      )}
+      {data && data.notes.length > 0 && <NoteList notes={data.notes} />}
     </div>
   );
 }
