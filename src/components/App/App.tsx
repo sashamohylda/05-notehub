@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { useDebouncedCallback } from 'use-debounce';
 import { fetchNotes } from '../../services/noteService';
+import ErrorMessage from '../ErrorMessage/ErrorMessage';
+import Loader from '../Loader/Loader';
 import NoteList from '../NoteList/NoteList';
 import Modal from '../Modal/Modal';
 import NoteForm from '../NoteForm/NoteForm';
@@ -54,9 +56,14 @@ export default function App() {
         </button>
       </header>
 
-      {isLoading && <p>Loading notes...</p>}
-      {isError && <p>Something went wrong. Try again later.</p>}
+      {isLoading && <Loader />}
+      {isError && <ErrorMessage />}
       {data && data.notes.length > 0 && <NoteList notes={data.notes} />}
+      {data && data.notes.length === 0 && (
+        <p className={css.empty}>
+          {search ? `No notes found for "${search}"` : 'You have no notes yet'}
+        </p>
+      )}
 
       {isModalOpen && (
         <Modal onClose={closeModal}>
